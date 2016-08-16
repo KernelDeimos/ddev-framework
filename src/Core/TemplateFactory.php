@@ -1,6 +1,6 @@
 <?php
 
-namespace DDev;
+namespace DDev\Core;
 
 class TemplateFactory {
 	function make_tmpl($filepath) {

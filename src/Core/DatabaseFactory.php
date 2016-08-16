@@ -1,6 +1,6 @@
 <?php
 
-namespace DDev;
+namespace DDev\Core;
 
 /**
  * This class acts as a factory for all database objects.

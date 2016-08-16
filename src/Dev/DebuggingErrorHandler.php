@@ -1,6 +1,6 @@
 <?php
 
-namespace DDev;
+namespace DDev\Dev;
 
 class DebuggingErrorHandler
 {

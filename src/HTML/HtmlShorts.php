@@ -1,6 +1,6 @@
 <?php
 
-namespace DDev;
+namespace DDev\HTML;
 
 class HtmlShorts {
 	static function drawTab($text,$from,$to) {
