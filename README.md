@@ -98,7 +98,7 @@ More detailed documentation for the map object is available in the documentation
 ### A Note About Namespaces
 
 DDev Framework is organized into 4 main namespaces.
-- `\DDev\Core` contains the fundamental based classes.
+- `\DDev\Core` contains the fundamental base classes.
 - `\DDev\Dev` contains development tools, such as debuggers.
 - `\DDev\RC` contains release candidate classes. These may change drastically at any time.
 - `\DDev\Framework` will contain complete implementations of framework components. Since this is currently in early development, these classes will be found under `\DDev\RC\Framework`.
