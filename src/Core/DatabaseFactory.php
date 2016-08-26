@@ -2,6 +2,8 @@
 
 namespace DDev\Core;
 
+use \DDev\Config\ConfigProcessor
+
 /**
  * This class acts as a factory for all database objects.
  */
@@ -10,25 +12,41 @@ class DatabaseFactory {
 	// Store a DBConnectionManager
 	private $connection_manager;
 
+	private function process_config($config)
+	{
+		// Instantiate the processor
+		$processor = new ConfigProcessor('database_factory');
+
+		// Blueprint the tree
+		$processor->get_root()
+			->children()
+				->scalarNode('name')->end()
+				->scalarNode('driver')->end()
+					->defaultValue('mysql')
+				->end()
+				->scalarNode('host')
+					->defaultValue('localhost')
+				->end()
+				->scalarNode('user')->end()
+				->scalarNode('pass')->end()
+				->scalarNode('schema')->end()
+			->end()
+
+		// Process configuration
+		$this->config = $processor->process($config);
+	}
+
+	/**
+	 * @param  config  map containing configuration values
+	 */
 	function __construct($config) {
-		if (!$config instanceof Configurator) {
-			throw new FrameworkException (
-				"DBConnectionManager received an invalid configurator.",
-				FrameworkException::CONFIG_INVALID
-				);
-		}
-		if (!$config->has_properties(array('user','pass','host','schema'))) {
-			throw new FrameworkException (
-				"DBConnectionManager is missing database login info.",
-				FrameworkException::CONFIG_MISSING_KEY
-				);
-		}
-		$this->config = $config;
+		$this->process_config($config);
 	}
 
 	function getError() {
 		return $this->lastException;
 	}
+
 	function get_connection() {
 		if ($this->con instanceof PDO) return $this->con;
 
@@ -43,14 +61,11 @@ class DatabaseFactory {
 
 	}
 
-	function getConnection() {
-		call_user_func_array($this->get_connection, func_get_args());
-	}
-
 	private function connect() {
 		$config = $this->config;
-		$dbDsn = "mysql:host=".$config->get_property('host').";dbname=".$config->get_property('schema');
-		$con = new PDO( $dbDsn, $config->get_property('user'), $config->get_property('pass') );
+
+		$dbDsn = "mysql:host=".$config['host'].";dbname=".$config['schema'];
+		$con = new PDO( $dbDsn, $config['user'], $config['pass'] );
 		$con->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 		return $con;
 	}
