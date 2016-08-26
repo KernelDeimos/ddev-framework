@@ -44,13 +44,13 @@ class HtmlShorts {
 		// Include all external files listed
 		if (array_key_exists('external', $json)) {
 			foreach ($json['external'] as $url) {
-				HtmlShortcuts::includeJS($url);
+				HtmlShorts::includeJS($url);
 			}
 		}
 
 		// Include all JavaScript files listed
 		foreach ($json['scripts'] as $filen) {
-			HtmlShortcuts::includeJS(WEB_PATH . $directory .'/'. $filen);
+			HtmlShorts::includeJS(WEB_PATH . $directory .'/'. $filen);
 		}
 	}
 	static function metaCharset($set) {
