@@ -93,7 +93,7 @@ class Router
 
 		// Instantiate and run controller
 		$controller = new $class($this);
-		$response = $controller->main($request);
+		$response = $controller->main($request, $route);
 	}
 
 	function get_map()
